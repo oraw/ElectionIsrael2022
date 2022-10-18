@@ -2,7 +2,7 @@ import streamlit as st
 from datetime import date,datetime,timedelta
 
 import pandas as pd
-import matplotlib.image as mpimg
+#import matplotlib.image as mpimg
 
 from prophet import Prophet
 from prophet.plot import plot_plotly
