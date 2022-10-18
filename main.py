@@ -6,7 +6,7 @@ import pandas as pd
 
 #from prophet import Prophet
 #from prophet.plot import plot_plotly
-from plotly import graph_objs as go
+#from plotly import graph_objs as go
 
 st.set_page_config(page_title="Israel Election 2022 Sentiment Analyses",
                                     page_icon=":bar_chart:",
