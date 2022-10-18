@@ -3,3 +3,4 @@
 
 This python script uses data from out directory and display it on the screen. 
 
+https://electionisrael2022oraw.streamlitapp.com/
