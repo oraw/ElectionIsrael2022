@@ -91,70 +91,45 @@ def concatStr(s1,s2,s3,s4):
     return "{}{}{}{}".format(s1,s2,s3,s4)
 
 def load_data(leader):
-       st.image(concatStr('election/out/',leader,'_twitter.png',''))
-       
-       #df1 = pd.read_csv(concatStr('election/out/',leader,'_2022.csv',''))
-       #df2 = pd.read_csv(concatStr('election/out/',leader,'_analyses_2022','.csv'))
-       
+       st.image(concatStr('out/',leader,'_twitter.png',''))
+              
        df1 = pd.read_excel(
-       io=concatStr('election/out/',leader,'_2022.xlsx',''),
+       io=concatStr('out/',leader,'_2022.xlsx',''),
        engine='openpyxl',
        sheet_name=concatStr(leader,'_2022','',''),
        skiprows=0,
        usecols='C,G:I'
        )
        
-       #j=1
-
        NegativeDF=df1.sort_values(by=['Polarity']).query('Polarity<0')
        PositiveDF=df1.sort_values(by=['Polarity']).query('Polarity>0')
        
-       #for i in range(0, TweetsDF.shape[0]):
-        #  if (TweetsDF['Polarity'][i]  < 0):
-         #     NegativeDF[i]=TweetsDF[i]
-          #elif (TweetsDF['Polarity'][i]  > 0):
-           #   PositiveDF[i]=TweetsDF[i]
-          #j=j+1
-               
        df2 = pd.read_excel(
-       io=concatStr('election/out/',leader,'_analyses_2022.xlsx',''),
+       io=concatStr('out/',leader,'_analyses_2022.xlsx',''),
        engine='openpyxl',
        sheet_name=concatStr(leader,'_analyses_2022','',''),
        skiprows=0,
        usecols='D:F'
        )
-       #df2 = pd.read_csv(concatStr('election/out/',leader,'_analyses_2022','.csv'))
-       
-       #subjectivity_distribution=pd.DataFrame(df1['Subjectivity'].value_counts().head(50))
-       #st.bar_chart(subjectivity_distribution)
-       #polarity_distribution=pd.DataFrame(df1['Polarity'].value_counts().head(50))
-       #st.bar_chart(polarity_distribution)
        
        st.subheader("Sentiment distribution of the tweets")
-       #st.image(concatStr(leader,'png','',''), height = 1000, width = 1000)  
-       st.image(concatStr('election/out/',leader,'_pie.png',''))
+       st.image(concatStr('out/',leader,'_pie.png',''))
        
        st.subheader("Wordcloud for all the tweets")
-       #st.image(concatStr(leader,'png','',''), height = 1000, width = 1000)  
-       st.image(concatStr('election/out/',leader,'.png',''))  
+       st.image(concatStr('out/',leader,'.png',''))  
        
        selected_display_list =st.selectbox("Choose the option to display",display_list)  
        if selected_display_list in display_list:
             if selected_display_list=='Tweets':
-            #st.write(selected_display_list)                                                  
                st.dataframe(df1)
-               #st.table(df1.head())
             if selected_display_list=='Positive Tweets':
                st.dataframe(PositiveDF)
             if selected_display_list=='Negative Tweets':
                st.dataframe(NegativeDF)
             if selected_display_list=='Analyses':
-            #st.write(selected_display_list)                                                  
-               #st.table(df2.head())
                 st.dataframe(df2)
 
     #return data
-
 
 selected_leader = st.selectbox("Select leader in order to get data set",full_name_leaders)
 
