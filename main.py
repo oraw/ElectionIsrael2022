@@ -93,42 +93,43 @@ def concatStr(s1,s2,s3,s4):
     return "{}{}{}{}".format(s1,s2,s3,s4)
 
 def load_data(leader):
-       st.image(concatStr('out/',leader,'_twitter.png',''))
-              
-       df1 = pd.read_excel(
-       io=concatStr('out/',leader,'_2022.xlsx',''),
-       engine='openpyxl',
-       sheet_name=concatStr(leader,'_2022','',''),
-       skiprows=0,
-       usecols='C,G:I'
-       )
+        st.image(concatStr('out/',leader,'_twitter.png',''))
        
-       NegativeDF=df1.sort_values(by=['Polarity']).query('Polarity<0')
-       PositiveDF=df1.sort_values(by=['Polarity']).query('Polarity>0')
+        xlsx_file=concatStr('out/',leader,'_2022.xlsx','')
+        try:       
+            df1 = pd.read_excel(io=xlsx_file,
+                                    engine='openpyxl',
+                                    sheet_name=concatStr(leader,'_2022','',''),
+                                    skiprows=0,
+                                    usecols='C,G:I')
+        except OSError:
+            print('cannot open', xlsx_file)
+    
+        NegativeDF=df1.sort_values(by=['Polarity']).query('Polarity<0')
+        PositiveDF=df1.sort_values(by=['Polarity']).query('Polarity>0')
        
-       df2 = pd.read_excel(
-       io=concatStr('out/',leader,'_analyses_2022.xlsx',''),
-       engine='openpyxl',
-       sheet_name=concatStr(leader,'_analyses_2022','',''),
-       skiprows=0,
-       usecols='D:F'
-       )
+        df2 = pd.read_excel(io=concatStr('out/',leader,'_analyses_2022.xlsx',''),
+        engine='openpyxl',
+        sheet_name=concatStr(leader,'_analyses_2022','',''),
+        skiprows=0,
+        usecols='D:F'
+        )
        
-       st.subheader("Sentiment distribution of the tweets")
-       st.image(concatStr('out/',leader,'_pie.png',''))
+        st.subheader("Sentiment distribution of the tweets")
+        st.image(concatStr('out/',leader,'_pie.png',''))
        
-       st.subheader("Wordcloud for all the tweets")
-       st.image(concatStr('out/',leader,'.png',''))  
+        st.subheader("Wordcloud for all the tweets")
+        st.image(concatStr('out/',leader,'.png',''))  
        
-       selected_display_list =st.selectbox("Choose the option to display",display_list)  
-       if selected_display_list in display_list:
-            if selected_display_list=='Tweets':
-               st.dataframe(df1)
-            if selected_display_list=='Positive Tweets':
-               st.dataframe(PositiveDF)
-            if selected_display_list=='Negative Tweets':
-               st.dataframe(NegativeDF)
-            if selected_display_list=='Analyses':
+        selected_display_list =st.selectbox("Choose the option to display",display_list)  
+        if selected_display_list in display_list:
+             if selected_display_list=='Tweets':
+                st.dataframe(df1)
+             if selected_display_list=='Positive Tweets':
+                st.dataframe(PositiveDF)
+             if selected_display_list=='Negative Tweets':
+                st.dataframe(NegativeDF)
+             if selected_display_list=='Analyses':
                 st.dataframe(df2)
 
     #return data
